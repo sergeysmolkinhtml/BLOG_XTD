@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()
     {
-        dd(__METHOD__);
+        $paginator = DB::table('blog_categories')->paginate(15);
+
+        return view('blog.admin.category.index',compact('paginator'));
     }
 
     /**
