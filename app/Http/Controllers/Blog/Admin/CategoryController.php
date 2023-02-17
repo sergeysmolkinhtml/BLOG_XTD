@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -61,8 +62,9 @@ class CategoryController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(BlogCategoryUpdateRequest $request, string $id): RedirectResponse
     {
+
         $item = BlogCategory::find($id);
 
         if(empty($item)){
