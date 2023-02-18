@@ -13,9 +13,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a href="" class="nav-link active" aria-current="page">
-                        {{__('Admin Panel')}}
-                    </a>
+
+                    @auth
+                        <a href="{{route('dashboard')}}" class="nav-link active" aria-current="page">
+                            {{__('Profile')}}
+                        </a>
+                    @endauth
+
+                    @guest
+                        <a href="{{route('register')}}" class="nav-link active" aria-current="page">
+                            {{__('Register')}}
+                        </a>
+
+                        <a href="{{route('login')}}" class="nav-link active" aria-current="page">
+                            {{__('Login')}}
+                        </a>
+                    @endguest
                 </li>
             </ul>
         </div>
