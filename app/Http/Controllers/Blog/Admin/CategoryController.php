@@ -5,35 +5,50 @@ namespace App\Http\Controllers\Blog\Admin;
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Repositories\BlogCategoryRepository;
 
+/*
+ * Manage Blog Categories
+ */
 
 
 class CategoryController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $paginator = DB::table('blog_categories')->paginate(15);
 
-        return view('blog.admin.categories.index',compact('paginator'));
+    /**
+     * @var BlogCategoryRepository
+     */
+    private $blogCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+    public function index()
+    {
+       $paginator = $this->blogCategoryRepository->getAllWithPaginate(18);
+
+       return view('blog.admin.categories.index',
+              compact('paginator'));
+    }
+
+
     public function create()
     {
         $item = new BlogCategory();
-        $categoryList = BlogCategory::all();
+        $categoryList = $this->blogCategoryRepository->getForComboBox();
 
-        return view('blog.admin.categories.edit',compact('item','categoryList'));
+        return view('blog.admin.categories.edit',
+               compact('item','categoryList'));
     }
 
     /**
@@ -80,7 +95,7 @@ class CategoryController extends BaseController
             abort(404);
         }
 
-        $categoryList = $categoryRepository->getForComboBox();
+        $categoryList = $this->blogCategoryRepository->getForComboBox();
 
         return view('blog.admin.categories.edit',
             compact('item','categoryList'));
