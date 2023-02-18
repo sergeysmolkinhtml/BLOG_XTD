@@ -6,11 +6,12 @@ use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use App\Repositories\BlogCategoryRepository;
+
+
 
 class CategoryController extends BaseController
 {
@@ -71,11 +72,15 @@ class CategoryController extends BaseController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, BlogCategoryRepository $categoryRepository)
     {
-        $item = BlogCategory::findOrFail($id);
+        $item = $categoryRepository->getEdit($id);
 
-        $categoryList = BlogCategory::all();
+        if(empty($item)){
+            abort(404);
+        }
+
+        $categoryList = $categoryRepository->getForComboBox();
 
         return view('blog.admin.categories.edit',
             compact('item','categoryList'));
