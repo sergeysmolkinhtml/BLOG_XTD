@@ -3,17 +3,21 @@
     @php
         /** @var \App\Models\BlogCategory $item */
     @endphp
-    <form method="POST" action="{{ route('blog.admin.categories.update',$item->id) }}">
-        @method('PATCH')
-        @csrf
-        <div class="container">
-            @php
-                /** @var \Illuminate\Support\ViewErrorBag $errors */
-            @endphp
+    @if($item->exists)
+        <form method="POST" action="{{ route('blog.admin.categories.update',$item->id) }}">
+        @method('PATCH');
+    @else
+         <form method="POST" action="{{ route('blog.admin.categories.store') }}">
+    @endif
+         @csrf
+            <div class="container">
+         @php
+             /** @var \Illuminate\Support\ViewErrorBag $errors */
+         @endphp
             @if($errors->any())
                 <div class="row justify-content-center">
-                    <div class="col-md-11">
-                        <div class="alert alert-danger" role="alert">
+                     <div class="col-md-11">
+                          <div class="alert alert-danger" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">x</span>
                             </button>
