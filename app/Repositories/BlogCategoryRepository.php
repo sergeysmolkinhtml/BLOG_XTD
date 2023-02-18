@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\BlogCategory as Model;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -38,7 +38,7 @@ class BlogCategoryRepository extends CoreRepository
     }
 
     /**
-     * Get list of categories for comboBox [drop down sheet]
+     * Get list of categories for comboBox [drop down list]
      *
      * @return Collection
      */
@@ -73,7 +73,7 @@ class BlogCategoryRepository extends CoreRepository
     {
        $columns = ['id','title','parent_id'];
 
-        $result = $this->startConditions()
+       $result = $this->startConditions()
                        ->select($columns)
                        ->paginate($perPage);
 

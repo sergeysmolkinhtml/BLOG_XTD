@@ -28,14 +28,14 @@ abstract class CoreRepository
     /**
      * @return mixed
      */
-    abstract protected function getModelClass(): mixed;
+    abstract protected function getModelClass();
 
     /**
      *@return Model|mixed
      */
     protected function startConditions(): mixed
     {
-        return clone $this->model; // new keyword
+        return clone $this->model; //   or new instance
     }
 
 }

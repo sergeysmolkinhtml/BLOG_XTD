@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Blog\Admin\CategoryController;
-use App\Http\Controllers\Blog\PostController;
+use App\Http\Controllers\Blog\Admin\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +12,7 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix'=>'blog'], function (){
-    Route::resource('posts', PostController::class)->names('blog.posts');
+    Route::resource('posts', App\Http\Controllers\Blog\PostController::class)->names('blog.posts');
 });
 
 Route::get('/dashboard', function () {
@@ -26,13 +26,17 @@ Route::middleware('auth')->group(function () {
 });
 
 // Blog Admin Panel
-
-
 Route::group(['prefix'=>'admin/blog'], function (){
     // BlogCategory
    $methods = ['index','edit','store','update','create'];
+
    Route::resource('categories', CategoryController::class)
        ->only($methods)
        ->names('blog.admin.categories');
+
+   Route::resource('posts',App\Http\Controllers\Blog\Admin\PostController::class)
+       ->except(['show'])
+       ->names('blog.admin.posts');
+
 });
 

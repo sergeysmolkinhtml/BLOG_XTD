@@ -23,7 +23,7 @@ class CategoryController extends BaseController
     /**
      * @var BlogCategoryRepository
      */
-    private $blogCategoryRepository;
+    private mixed $blogCategoryRepository;
 
     public function __construct()
     {
