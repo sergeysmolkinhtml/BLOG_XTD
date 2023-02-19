@@ -25,7 +25,7 @@ class PostController extends BaseController
      */
     public function create(): Response
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -33,7 +33,7 @@ class PostController extends BaseController
      */
     public function store(Request $request): RedirectResponse
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -41,7 +41,7 @@ class PostController extends BaseController
      */
     public function show(string $id): Response
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -49,7 +49,7 @@ class PostController extends BaseController
      */
     public function edit(string $id): Response
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -57,7 +57,7 @@ class PostController extends BaseController
      */
     public function update(Request $request, string $id): RedirectResponse
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -65,6 +65,6 @@ class PostController extends BaseController
      */
     public function destroy(string $id): RedirectResponse
     {
-        //
+      dd(__METHOD__);
     }
 }
