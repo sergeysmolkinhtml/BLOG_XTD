@@ -28,10 +28,10 @@ Route::middleware('auth')->group(function () {
 // Blog Admin Panel
 Route::group(['prefix'=>'admin/blog'], function (){
     // BlogCategory
-   $methods = ['index','edit','store','update','create'];
+   $categoryMethods = ['index','edit','store','update','create'];
 
    Route::resource('categories', CategoryController::class)
-       ->only($methods)
+       ->only($categoryMethods)
        ->names('blog.admin.categories');
 
    Route::resource('posts',App\Http\Controllers\Blog\Admin\PostController::class)
