@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogPostUpdateRequest;
 use App\Repositories\BlogCategoryRepository;
 use App\Repositories\BlogPostRepository;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class PostController extends BaseController
 {
@@ -84,9 +87,39 @@ class PostController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(BlogPostUpdateRequest $request, string $id): RedirectResponse
     {
-        dd(__METHOD__);
+       $item = $this->blogPostRepository->getEdit($id);
+
+       if(empty($item)){
+           return back()
+               ->withErrors(['msg' => "Article id = $id not found"])
+               ->withInput();
+       }
+
+       $data = $request->all();
+
+        // shit coding for now [observers]
+        if(empty($data['slug'])){
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        if(empty($item->published_at) && $data['is_published']){
+            $data['published_at'] = Carbon::now();
+        }
+
+        $result = $item->update($data);
+
+        if($result){
+            return redirect()
+                ->route('blog.admin.posts.edit',$item->id)
+                ->with(['success' => 'Successfully saved']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Error saving'])
+                ->withInput();
+        }
+
     }
 
     /**
