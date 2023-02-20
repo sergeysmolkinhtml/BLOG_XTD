@@ -11,6 +11,7 @@
                     Draft
                 @endif
             </div>
+
                 <div class="card-body">
                     <div class="card-title"></div>
                     <div class="card-subtitle mb-2 text-muted"></div>
@@ -19,10 +20,11 @@
                             <a class="nav-link active" data-toggle="tab" href="#maindata" role="tab">Main data</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#add_data" role="tab">Opt data</a>
+                            <a class="nav-link" data-toggle="tab" href="#adddata" role="tab">Opt data</a>
                         </li>
                     </ul>
                     <br>
+                    <a href="" id="adddata">Opt</a>
                     <div class="tab-content">
                         <div class="tab-pane active" id="maindata" role="tabpanel">
                             <div class="form-group">
@@ -44,22 +46,9 @@
                                 </textarea>
                             </div>
                         </div>
-                        <div class="tab-pane" id="add_data" role="tabpanel">
-                            <div class="form-group">
-                                <label for="category_id"> Category </label>
-                                <select name="category_id"
-                                        id="category_id"
-                                        class="form-control"
-                                        placeholder="Choose category"
-                                        required>
-                                    @foreach($categoryList as $categoryOption)
-                                        <option value="{{$categoryOption->id}}"
-                                                @if($categoryOption->id == $item->category_id) selected @endif>
-                                            {{$categoryOption->id_title}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+
+
+                        <div class="tab-pane" id="adddata" role="tabpanel">
 
                             <div class="form-group">
                                 <label for="slug">Identifier</label>
@@ -91,7 +80,6 @@
                                            checked="checked"
                                        @endif
                                 />
-
                                 <label class="form-check-label" for="is_published">Published</label>
                             </div>
                         </div>

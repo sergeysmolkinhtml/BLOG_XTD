@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Blog;
 
 
+use App\Http\Requests\BlogPostUpdateRequest;
 use App\Models\BlogPost;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -57,7 +58,7 @@ class PostController extends BaseController
      */
     public function update(Request $request, string $id): RedirectResponse
     {
-        dd(__METHOD__);
+
     }
 
     /**
