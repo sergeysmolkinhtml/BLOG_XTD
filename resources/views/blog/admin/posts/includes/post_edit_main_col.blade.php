@@ -24,7 +24,7 @@
                         </li>
                     </ul>
                     <br>
-                    <a href="" id="adddata">Opt</a>
+
                     <div class="tab-content">
                         <div class="tab-pane active" id="maindata" role="tabpanel">
                             <div class="form-group">
@@ -48,8 +48,24 @@
                         </div>
 
 
-                        <div class="tab-pane" id="adddata" role="tabpanel">
-
+                        <div class="tab-panel" id="adddata" role="tabpanel">
+                            <div class="tab-pane" role="tabpanel">
+                                <div class="form-group">
+                                    <label for="category_id"> Category </label>
+                                    <select name="category_id"
+                                            id="category_id"
+                                            class="form-control"
+                                            placeholder="Choose category"
+                                            required>
+                                        @foreach($categoryList as $categoryOption)
+                                            <option value="{{$categoryOption->id}}"
+                                                    @if($categoryOption->id == $item->category_id) selected @endif>
+                                                {{$categoryOption->id_title}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="slug">Identifier</label>
                                 <input name="slug" value="{{$item->slug}}"

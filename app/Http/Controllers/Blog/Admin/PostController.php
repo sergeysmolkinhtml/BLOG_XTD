@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogPostCreateRequest;
 use App\Http\Requests\BlogPostUpdateRequest;
+use App\Models\BlogPost;
 use App\Repositories\BlogCategoryRepository;
 use App\Repositories\BlogPostRepository;
 use Carbon\Carbon;
@@ -46,17 +48,31 @@ class PostController extends BaseController
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create()
     {
-        dd(__METHOD__);
+        $item = new BlogPost();
+        $categoryList = $this->blogCategoryRepository->getForComboBox();
+
+        return view('blog.admin.posts.edit',compact('item','categoryList'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(BlogPostCreateRequest $request): RedirectResponse
     {
-        dd(__METHOD__);
+        $data = $request->input();
+
+        $item = (new BlogPost())->create($data);
+
+        if($item){
+            return redirect()->route('blog.admin.posts.edit',[$item->id])
+                ->with(['success' => 'Saved successfully']);
+        }else{
+            return back()->withErrors(['msg'=>'Error saving'])
+                ->withInput();
+        }
+
     }
 
     /**
