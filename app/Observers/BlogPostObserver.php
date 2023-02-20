@@ -17,9 +17,25 @@ class BlogPostObserver
     }
 
     /**
+     * Handle before creating
+     *
+     * @param BlogPost $blogPost
+     * @return void
+     */
+    public function creating(BlogPost $blogPost)
+    {
+        $this->setPublishedAt($blogPost);
+
+        $this->setSlug($blogPost);
+
+        $this->setHTML($blogPost);
+
+        $this->setUser($blogPost);
+    }
+    /**
      * Handle the BlogPost "updated" event.
      */
-    public function updated(BlogPost $blogPost): void
+    public function updating(BlogPost $blogPost): void
     {
         $this->setPublishedAt($blogPost);
 
@@ -43,6 +59,18 @@ class BlogPostObserver
             $blogPost->slug = Str::slug($blogPost->title);
         }
 
+    }
+
+    protected function setHTML(BlogPost $blogPost)
+    {
+        if($blogPost->isDirty('content_raw')){ // Dirty - "is changed?"
+            $blogPost->content_html = $blogPost->content_raw;
+        }
+    }
+
+    protected function setUser(BlogPost $blogPost)
+    {
+        $blogPost->user_id = auth()->id() ?? BlogPost::UNKNOWN_USER;
     }
 
     /**
