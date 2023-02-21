@@ -73,12 +73,17 @@ class BlogPostObserver
         $blogPost->user_id = auth()->id() ?? BlogPost::UNKNOWN_USER;
     }
 
+    public function deleting(BlogPost $blogPost)
+    {
+
+    }
+
     /**
      * Handle the BlogPost "deleted" event.
      */
     public function deleted(BlogPost $blogPost): void
     {
-        //
+
     }
 
     /**
