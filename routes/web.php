@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Blog\Admin\CategoryController;
-use App\Http\Controllers\Blog\Admin\PostController;
+use App\Http\Controllers\DiggingDeeper;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +9,11 @@ require __DIR__.'/auth.php';
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::group(['prefix' => 'digging_deeper'], function () {
+    Route::get('collections',[DiggingDeeper::class,'collections'])
+        ->name('digging_deeper.collections');
 });
 
 Route::group(['prefix'=>'blog'], function (){
