@@ -91,6 +91,9 @@ class CategoryController extends BaseController
     {
         $item = $categoryRepository->getEdit($id);
 
+        $item->title = 'FSADJGHAgskdg12';
+
+
         if(empty($item)){
             abort(404);
         }

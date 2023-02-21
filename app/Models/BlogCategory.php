@@ -24,7 +24,9 @@ class BlogCategory extends Model
 
         ];
 
-
+    /**
+     * @return BelongsTo
+     */
     public function parentCategory(): BelongsTo
     {
         return $this->belongsTo(BlogCategory::class,'parent_id','id');
@@ -33,10 +35,8 @@ class BlogCategory extends Model
 
     public function getParentTitleAttribute()
     {
-        $title = $this->parentCategory()->title
-            ?? ($this->isRoot()
-                ? 'Root'
-                : '???');
+        #TODO
+        $title = $this->parentCategory()->getParent() ?? ($this->isRoot() ? 'Root' : '???');
 
         return $title;
     }
@@ -45,4 +45,23 @@ class BlogCategory extends Model
     {
         return $this->id === BlogCategory::ROOT;
     }
+
+    /**
+     * @param $valueFromObject
+     * @return array|false|string|string[]|null
+     */
+    public function getTitleAttribute($valueFromObject)
+    {
+        return mb_strtoupper($valueFromObject);
+    }
+
+    /**
+     * @param $incomingValue
+     * @return void
+     */
+    public function setTitleAttribute($incomingValue)
+    {
+        $this->attributes['title'] = mb_strtolower($incomingValue);
+    }
+
 }
