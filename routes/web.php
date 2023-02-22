@@ -14,7 +14,11 @@ Route::get('/', function () {
 Route::group(['prefix' => 'digging_deeper'], function () {
     Route::get('collections',[DiggingDeeper::class,'collections'])
         ->name('digging_deeper.collections');
+
+    Route::get('prepare-catalog',[DiggingDeeper::class,'prepareCatalog'])
+        ->name('digging_deeper.prepareCatalog');
 });
+
 
 Route::group(['prefix'=>'blog'], function (){
     Route::resource('posts', App\Http\Controllers\Blog\PostController::class)->names('blog.posts');

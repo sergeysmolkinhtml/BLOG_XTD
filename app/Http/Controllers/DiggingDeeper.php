@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GenerateCatalog\GenerateCatalogMainJob;
+use App\Jobs\ProcessVideoJob;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
@@ -48,5 +50,16 @@ class DiggingDeeper extends Controller
 
 
     }
+
+    public function processVideo()
+    {
+        ProcessVideoJob::dispatch();
+    }
+
+    public function prepareCatalog()
+    {
+        GenerateCatalogMainJob::dispatch();
+    }
+
 
 }
