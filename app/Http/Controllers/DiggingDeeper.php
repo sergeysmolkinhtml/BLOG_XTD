@@ -26,6 +26,17 @@ class DiggingDeeper extends Controller
 
 /*        $result['where']['count'] = $result['where']['data']->count();*/
 
+        $filtered = $collection->filter(function ($item){
+            $byDay = $item->created_at->isFriday();
+            $byDate = $item->created_at->day == 11;
+
+            $result = $item->created_at->isFriday() && ($item->created_at->day == 11);
+            return $result;
+        });
+
+        dd(compact('filtered'));
+
+        //transform - change each data n get new
         $result['map']['all'] = $collection->map(function (array $item){
             $newItem = new \stdClass();
             $newItem->item_id = $item['id'];
