@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Blog\Admin;
 
 use App\Http\Requests\BlogPostCreateRequest;
 use App\Http\Requests\BlogPostUpdateRequest;
+use App\Jobs\BlogPostAfterCreateJob;
+use App\Jobs\BlogPostAfterDeleteJob;
 use App\Models\BlogPost;
 use App\Repositories\BlogCategoryRepository;
 use App\Repositories\BlogPostRepository;
@@ -66,6 +68,9 @@ class PostController extends BaseController
         $item = (new BlogPost())->create($data);
 
         if($item){
+            $job = new BlogPostAfterCreateJob($item);
+            $this->dispatch($job);
+
             return redirect()->route('blog.admin.posts.edit',[$item->id])
                 ->with(['success' => 'Saved successfully']);
         }else{
@@ -133,15 +138,17 @@ class PostController extends BaseController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(BlogPost $id): RedirectResponse
     {
         /*dd(__METHOD__ , $id, \request()->all());*/
 
-       //$result = BlogPost::destroy($id);
+       $result = BlogPost::destroy($id);
 
-       $result = BlogPost::find($id)->forceDelete();
+       //$result = BlogPost::find($id)->forceDelete();
+
 
        if ($result){
+           BlogPostAfterDeleteJob::dispatch($id);
            return redirect()->route('blog.admin.posts.index')
                ->with(['success' => "Record id $id deleted"]);
        }else{

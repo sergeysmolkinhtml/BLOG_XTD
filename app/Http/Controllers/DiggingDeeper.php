@@ -34,7 +34,7 @@ class DiggingDeeper extends Controller
             return $result;
         });
 
-        dd(compact('filtered'));
+
 
         //transform - change each data n get new
         $result['map']['all'] = $collection->map(function (array $item){
@@ -45,10 +45,8 @@ class DiggingDeeper extends Controller
 
             return $newItem;
         });
-        dd($result);
 
 
-        dd($result);
     }
 
 }
