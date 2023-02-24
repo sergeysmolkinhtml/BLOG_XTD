@@ -105,7 +105,7 @@ class CategoryController extends BaseController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storag.
      * @param BlogCategoryUpdateRequest $request
      * @param string $id
      * @return RedirectResponse
